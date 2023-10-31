@@ -1,0 +1,47 @@
+CREATE DATABASE hospital;
+
+
+CREATE TABLE patient (
+    id INT NOT NULL PRIMARY KEY UNIQUE,
+    last_name VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    patronymic VARCHAR(255) NOT NULL,
+    date_of_birth DATE,
+    tel VARCHAR(25) NOT NULL,
+    email VARCHAR(255)
+);
+
+INSERT INTO patient VALUES (1, 'Аминева', 'Марианна', 'Николаевна', '1982-07-27' , '+7 (978) 953-95-33', 'marianna.amineva@mail.ru');
+INSERT INTO patient VALUES (2, 'Гунина', 'Лариса', 'Михаиловна', '1975-11-12' , '+7 (978) 717-57-19', 'larisa1975@gmail.com');
+INSERT INTO patient VALUES (3, 'Комягин', 'Геннадий', 'Игнатьевич', '1962-12-13' , '+7 (989) 773-35-15', 'gennadiy1962@gmail.com');
+INSERT INTO patient VALUES (4, 'Карандасов', 'Александр', 'Витальевич', '1989-08-25' , '+7 (939) 661-74-84', 'aleksandr.karandasov@outlook.com');
+INSERT INTO patient VALUES (5, 'Капшуков', 'Игнат', 'Саввеевич', '1967-01-05' , '+7 (959) 402-33-56', 'ignat.kapshukov@rambler.ru');
+
+
+CREATE TABLE doctor (
+    id INT NOT NULL PRIMARY KEY UNIQUE,
+    last_name VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    patronymic VARCHAR(255) NOT NULL,
+    specialization VARCHAR(255)
+);
+
+INSERT INTO doctor VALUES (1, 'Богоявленский', 'Севастьян', 'Валерьевич', 'Аллерголог');
+INSERT INTO doctor VALUES (2, 'Матвиенко', 'Леонид', 'Николаевич', 'Вирусолог');
+INSERT INTO doctor VALUES (3, 'Подмазко', 'Серафим', 'Семенович', 'Маммолог');
+INSERT INTO doctor VALUES (4, 'Яфарова', 'Наталия', 'Антоновна', 'Остеопат');
+INSERT INTO doctor VALUES (5, 'Кобонова', 'Римма', 'Ефремовна', 'Эндокринолог');
+
+
+CREATE TABLE consultation_request (
+    id SERIAL NOT NULL PRIMARY KEY,
+    id_patient INT NOT NULL REFERENCES patient(id) ON DELETE CASCADE,
+    text_request TEXT NOT NULL,
+    date_of_create DATE
+);
+
+CREATE TABLE recommendation (
+    id_consultation_request INT NOT NULL REFERENCES consultation_request(id) ON DELETE CASCADE,
+    id_doctor INT NOT NULL,
+    text_request TEXT NOT NULL
+);
